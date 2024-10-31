@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   description: "API for e commerce"
   version: "1.0.0"
-  title: "Factory Management System API"
+  title: Ecommerce API"
 
 host: "localhost:5000"
 basePath: "/"
