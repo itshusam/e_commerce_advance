@@ -1,6 +1,6 @@
 from models.customer import Customer
 from app import db
-
+from sqlalchemy import select
 def create_customer(data):
     new_customer = Customer(name=data['name'], email=data['email'], phone=data['phone'])
     db.session.add(new_customer)
@@ -25,3 +25,9 @@ def delete_customer(customer_id):
         db.session.delete(customer)
         db.session.commit()
     return customer
+
+
+def find_all():
+    query = select(Customer)
+    customers = db.session.execute(query).scalars().all()
+    return customers

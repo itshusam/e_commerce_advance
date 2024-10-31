@@ -2,10 +2,12 @@ from flask import Flask
 from database import db
 from schema import ma
 from limiter import limiter
-
+from routes.customer_route import customer_blueprint
+from routes.customer_account_route import customer_account_blueprint
+from routes.product_route import product_blueprint
+from routes.order_route import order_blueprint
 from caching import cache
 from flask_cors import CORS
-from routes.userBP import auth_blueprint
 from flask_swagger_ui import get_swaggerui_blueprint
 
 SWAGGER_URL = '/api/docs'
@@ -31,12 +33,9 @@ def create_app(config_name):
 
 def blue_print_config(app):
     app.register_blueprint(customer_blueprint, url_prefix='/customers')
-    app.register_blueprint(employee_blueprint, url_prefix='/employees')
+    app.register_blueprint(customer_account_blueprint, url_prefix='/customer_accounts')
     app.register_blueprint(product_blueprint, url_prefix='/products')
     app.register_blueprint(order_blueprint, url_prefix='/orders')
-    app.register_blueprint(production_blueprint, url_prefix='/productions')
-    app.register_blueprint(analytics_blueprint, url_prefix='/analytics')
-    app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(swaggerui_blueprint, url_prefix='/SWAGGER_URL')
 
 def configure_rate_limit():
