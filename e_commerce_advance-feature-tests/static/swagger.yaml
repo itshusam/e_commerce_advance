@@ -1,0 +1,216 @@
+swagger: "2.0"
+info:
+  description: "API for e commerce"
+  version: "1.0.0"
+  title: Ecommerce API"
+
+host: "localhost:5000"
+basePath: "/"
+schemes:
+  - "http"
+paths:
+  /customers:
+    post:
+      summary: "Create a new customer"
+      description: "Endpoint to create a new customer"
+      tags:
+        - "Customer"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            type: "object"
+            required: ["name", "email", "phone"]
+            properties:
+              name:
+                type: "string"
+              email:
+                type: "string"
+              phone:
+                type: "string"
+      responses:
+        201:
+          description: "Customer created successfully"
+          schema:
+            $ref: "#/definitions/Customer"
+        400:
+          description: "Invalid input"
+    get:
+      summary: "List all customers"
+      description: "Retrieve a list of all customers"
+      tags:
+        - "Customer"
+      responses:
+        200:
+          description: "List of customers"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Customer"
+  /customers/{customer_id}:
+    get:
+      summary: "Get customer by ID"
+      tags:
+        - "Customer"
+      parameters:
+        - name: "customer_id"
+          in: "path"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Customer retrieved"
+          schema:
+            $ref: "#/definitions/Customer"
+        404:
+          description: "Customer not found"
+    put:
+      summary: "Update customer"
+      tags:
+        - "Customer"
+      parameters:
+        - name: "customer_id"
+          in: "path"
+          required: true
+          type: "integer"
+        - in: "body"
+          name: "body"
+          schema:
+            $ref: "#/definitions/Customer"
+      responses:
+        200:
+          description: "Customer updated"
+          schema:
+            $ref: "#/definitions/Customer"
+        404:
+          description: "Customer not found"
+    delete:
+      summary: "Delete customer"
+      tags:
+        - "Customer"
+      parameters:
+        - name: "customer_id"
+          in: "path"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Customer deleted"
+        404:
+          description: "Customer not found"
+  /customer_accounts:
+    post:
+      summary: "Create a customer account"
+      tags:
+        - "CustomerAccount"
+      parameters:
+        - in: "body"
+          name: "body"
+          schema:
+            $ref: "#/definitions/CustomerAccount"
+      responses:
+        201:
+          description: "Customer account created"
+          schema:
+            $ref: "#/definitions/CustomerAccount"
+  /products:
+    post:
+      summary: "Create a new product"
+      tags:
+        - "Product"
+      parameters:
+        - in: "body"
+          name: "body"
+          schema:
+            $ref: "#/definitions/Product"
+      responses:
+        201:
+          description: "Product created successfully"
+          schema:
+            $ref: "#/definitions/Product"
+    get:
+      summary: "List all products"
+      tags:
+        - "Product"
+      responses:
+        200:
+          description: "List of products"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Product"
+  /orders:
+    post:
+      summary: "Place a new order"
+      tags:
+        - "Order"
+      parameters:
+        - in: "body"
+          name: "body"
+          schema:
+            $ref: "#/definitions/Order"
+      responses:
+        201:
+          description: "Order placed successfully"
+          schema:
+            $ref: "#/definitions/Order"
+    get:
+      summary: "List all orders"
+      tags:
+        - "Order"
+      responses:
+        200:
+          description: "List of orders"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Order"
+
+definitions:
+  Customer:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+  CustomerAccount:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      username:
+        type: "string"
+      password:
+        type: "string"
+      customer_id:
+        type: "integer"
+  Product:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      price:
+        type: "number"
+        format: "float"
+  Order:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      order_date:
+        type: "string"
+        format: "date"
+      customer_id:
+        type: "integer"
+      products:
+        type: "array"
+        items:
+          $ref: "#/definitions/Product"
