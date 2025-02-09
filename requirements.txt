@@ -1,0 +1,12 @@
+Flask
+Flask-Cors
+Flask-SQLAlchemy
+Flask-RESTful
+Flask-JWT-Extended
+psycopg2-binary
+gunicorn
+pytest
+pytest-cov
+swagger-ui-bundle
+flasgger
+requests
