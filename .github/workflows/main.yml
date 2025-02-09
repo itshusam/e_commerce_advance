@@ -4,10 +4,9 @@ on:
   push:
     branches: [main, master]
 
-jobs: 
+jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -28,9 +27,8 @@ jobs:
           echo "Contents of Working Directory: $(ls -1)"
           echo "Contents of node_modules: $(ls -1 node_modules)"
 
-    test:
-      runs-on: ubuntu-latest
-
+  test:
+    runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -58,13 +56,11 @@ jobs:
 
       - name: Run Backend Tests
         run: |
-          pytest --maxfail=1 --disable-warnings  # Ensures pipeline fails on first error
-
+          pytest --maxfail=1 --disable-warnings
 
   deploy:
     needs: test
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
